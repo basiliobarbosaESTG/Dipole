@@ -107,16 +107,16 @@ def main():
                 else:
                     print("Opção inválida, tente novamente.")
         elif choice == "2":
-            print("\n----- REGRAS DIPOLE -----\n")
-            print(f"1- Este jogo consiste num jogo de tabuleiro de 8x8 com um conjunto de peças.")
-            print(f"2- A primeira jogada é feita pelo jogador com as peças pretas (B), a seguir joga o jogador com as brancas (W).")
-            print(f"3- Uma jogada consiste em colocar uma peça num dos espaços vazio no tabuleiro.")
-            print(f"4- Uma vez introduzidas no jogo, as peças podem ser capturadas pelo oponente e removidas do tabuleiro.")
-            print(f"5- O número de quadrados que uma pilha é movida deve ser igual ao número de peças na pilha movida.")
-            print(f"6- O jogador pode mover a pilha inteira ou apenas uma porção desta.")
-            print(f"7- Um jogador pode passar a sua vez.")
-            print(f"Uma pilha pode capturar apenas uma pilha inimiga inteira, que deve ser de tamanho igual ou menor que a pilha de captura.")
-            print(f"8- Vence o jogador que seja o primeiro a eliminar todas as peças do seu oponente ou prendê-lo de forma que ele não possa fazer mais nenhum movimento.")
+            print("\n----------------------------------------------------- REGRAS DIPOLE -----------------------------------------------------\n")
+            print(f"1 - Este jogo consiste num jogo de tabuleiro de 8x8 com um conjunto de peças.")
+            print(f"2 - A primeira jogada é feita pelo jogador com as peças pretas(B), de seguida o jogador com as brancas(W).")
+            print(f"3 - Uma jogada consiste em colocar uma peça num dos espaços vazios no tabuleiro.")
+            print(f"4 - Uma vez introduzidas no jogo, as peças podem ser capturadas pelo oponente e removidas do tabuleiro.")
+            print(f"5 - O número de quadrados que uma pilha é movida deve ser igual ao número de peças na pilha movida.")
+            print(f"6 - O jogador pode mover a pilha inteira ou apenas uma porção desta. Pode ainda passar a sua vez de jogar para o oponente.")
+            print(f"7 - Uma pilha pode capturar apenas uma pilha inimiga inteira, que deve ser de tamanho igual ou menor que a pilha de captura.")
+            print(f"8 - Vence o jogador que seja o primeiro a eliminar todas as peças do seu oponente.")
+            print("\n----------------------------------------------------- REGRAS DIPOLE -----------------------------------------------------\n")
         elif choice == "0":
             print("A terminar jogo...")
             break

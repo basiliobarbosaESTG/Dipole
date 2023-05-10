@@ -7,7 +7,6 @@ class HumanDipolePlayer(DipolePlayer):
     def __init__(self, name):
         super().__init__(name)
 
-    ###
     def get_user_input(self, prompt: str) -> int:
         while True:
             try:

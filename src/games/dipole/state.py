@@ -84,13 +84,12 @@ class DipoleState(State):
     def get_num_players(self):
         return 2
 
-    # Um método que valida se uma ação é legal no jogo.
-    # Uma ação é válida se estiver dentro dos limites do tabuleiro
-    # e a coluna correspondente não estiver cheia.
+    # Um método que valida se uma ação é legal no jogo. Uma ação é válida 
+    # se estiver dentro dos limites do tabuleiro e a coluna correspondente não estiver cheia.
     def validate_action(self, action: DipoleAction) -> bool:
         row = action.get_row()
         col = action.get_col()
-        player = self.__acting_player ###
+        player = self.__acting_player
 
         #valid row
         if row < 0 or row >= self.__num_rows:
@@ -99,13 +98,6 @@ class DipoleState(State):
         # valid column
         if col < 0 or col >= self.__num_cols:
             return False
-        
-        # # full column
-        # if self.__grid[0][col] != DipoleState.EMPTY_CELL:
-        #     return False
-        # # full row
-        # if self.__grid[row][0] != DipoleState.EMPTY_CELL:
-        #     return False
         
         #check if grid is full
         if self.__grid[row][col] != DipoleState.EMPTY_CELL:
@@ -369,7 +361,6 @@ class DipoleState(State):
         self.__display_separator()
 
         for row in range(0, self.__num_rows):
-            #print(row, end="")
             print(row, end="")
             print('|', end="")
             for col in range(0, self.__num_cols):
@@ -392,7 +383,6 @@ class DipoleState(State):
         return self.__acting_player
 
     def clone(self):
-        #cloned_state = DipoleState(self.__num_rows, self.__num_cols)
         cloned_state = DipoleState(self.__num_rows)
         cloned_state.__turns_count = self.__turns_count
         cloned_state.__acting_player = self.__acting_player

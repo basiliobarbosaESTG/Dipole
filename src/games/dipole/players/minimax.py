@@ -1,5 +1,5 @@
 import math
-import random ###
+import random
 
 from games.dipole.player import DipolePlayer
 from games.dipole.result import DipoleResult
@@ -10,7 +10,7 @@ from games.dipole.action import DipoleAction
 
 class MinimaxDipolePlayer(DipolePlayer):
     def __init__(self, name):
-        self.action_count = 0 ###
+        self.action_count = 0
         super().__init__(name)
 
     '''
@@ -76,7 +76,7 @@ class MinimaxDipolePlayer(DipolePlayer):
                 new_state = state.clone()
                 new_state.update(action)
                 pre_value = value
-                value = max(value, self.minimax(new_state, depth - 1, alpha, beta, False)) ###
+                value = max(value, self.minimax(new_state, depth - 1, alpha, beta, False))
                 if value > pre_value:
                     selected_action = action
                 if value > beta:
@@ -91,7 +91,7 @@ class MinimaxDipolePlayer(DipolePlayer):
             for action in state.get_possible_actions():
                 new_state = state.clone()
                 new_state.update(action)
-                value = min(value, self.minimax(new_state, depth - 1, alpha, beta, False)) ###
+                value = min(value, self.minimax(new_state, depth - 1, alpha, beta, False))
                 if value < alpha:
                     break
                 beta = min(beta, value)
@@ -104,7 +104,7 @@ class MinimaxDipolePlayer(DipolePlayer):
             return DipoleAction(is_pass=True)
         
         # Introduce some randomness in the initial moves
-        if self.action_count < 3: ###
+        if self.action_count < 3:
             possible_actions = state.get_possible_actions()
             return random.choice(possible_actions)
         return self.minimax(state, 2)
