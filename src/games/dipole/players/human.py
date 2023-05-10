@@ -42,9 +42,7 @@ class HumanDipolePlayer(DipolePlayer):
                 print("Jogada inválida, tente novamente.")
 
     def event_action(self, pos: int, action, new_state: DipoleState):
-        # ignore
         pass
 
     def event_end_game(self, final_state: DipoleState):
-        # ignore
         pass

@@ -13,7 +13,7 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     for i in range(0, iterations):
         simulator.run_simulation()
 
-    print("Results for the game:")
+    print("Resultados do jogo:")
     simulator.print_stats()
 
 

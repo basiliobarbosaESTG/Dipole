@@ -114,9 +114,7 @@ class MinimaxDipolePlayer(DipolePlayer):
         self.action_count = 0
 
     def event_action(self, pos: int, action, new_state: State):
-        # ignore
         pass
 
     def event_end_game(self, final_state: State):
-        # ignore
         pass
