@@ -3,11 +3,13 @@ from abc import ABC, abstractmethod
 from games.state import State
 
 
-class Player(ABC):
+class Player(ABC):  # Cria diferentes tipos de jogadores num jogo
+    # contém métodos abstratos que devem ser implementados por qualquer classe herdada dela
 
     """
     :param name: name of the player (simply a text identifier for the player)
     """
+
     def __init__(self, name):
         # name of the player
         self.__name = name
@@ -19,12 +21,14 @@ class Player(ABC):
     """
     retrieves the name of the player
     """
+
     def get_name(self):
         return self.__name
 
     """
     retrieves the current position of the player
     """
+
     def get_current_pos(self):
         return self.__current_pos
 
@@ -32,6 +36,7 @@ class Player(ABC):
     sets the current position of the player
     :param new_pos: the new position
     """
+
     def set_current_pos(self, new_pos):
         self.__current_pos = new_pos
 
@@ -46,6 +51,7 @@ class Player(ABC):
     Method that returns an action for a certain game state
     :param state: the current game state
     """
+    # retorna a ação que o jogador deseja executar, dado o estado atual do jogo.
     @abstractmethod
     def get_action(self, state):
         pass
@@ -63,6 +69,7 @@ class Player(ABC):
     :param action: the action that was performed
     :param new_state: the resulting game state
     """
+    # notifica o jogador que um jogador na posição pos executou uma ação e mudou o estado do jogo para new_state
     @abstractmethod
     def event_action(self, pos: int, action, new_state: State):
         pass
@@ -72,6 +79,7 @@ class Player(ABC):
     :param pos: the position of the player that got the result
     :param result: the result of the player
     """
+    # notifica o jogador que um jogador na posição pos recebeu um resultado de resultado
     @abstractmethod
     def event_result(self, pos: int, result):
         pass

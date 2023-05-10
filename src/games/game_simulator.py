@@ -4,14 +4,15 @@ from games.player import Player
 from games.state import State
 
 
-class GameSimulator(ABC):
+class GameSimulator(ABC):  # herda da classe ABC(Abstract Base Class)
 
-    def __init__(self, players: list):
+    def __init__(self, players: list):  # recebe a lista de jogadores
         # only allow list of players
-        assert len(list(filter(lambda p: not isinstance(p, Player), players))) <= 0
+        assert len(
+            list(filter(lambda p: not isinstance(p, Player), players))) <= 0
 
         # stores the possible permutations between players
-        self.__permutations = []
+        self.__permutations = []  # Lista de permutações, onde são guardadas as permutações
 
         self.heap_permutation(players, len(players))
 
@@ -23,17 +24,27 @@ class GameSimulator(ABC):
     It allows for generating all possible permutations of seats in a game
     """
 
+    # algoritmo recursivo que permite gerar todas as permutacoes possíveis de n objetos
+    # Método que gera todas as permutações possíveis da lista de jogadores
+    # a é uma lista que contem elementos para ser permutados e size - tamanho da lista
     def heap_permutation(self, a: list, size: int):
-        if size == 1:
+        # A função verifica se o tamanho da lista é 1, o que indica que uma permutação foi gerada
+        if size == 1:  # imprime a permutacao obtida
+            # anexamos a lista a.copy() copiando o seu conteúdo
+            # que guarda todas as permutacoes possiveis na lista (__permutations) através do metodo append()
             self.__permutations.append(a.copy())
 
         for i in range(0, size):
+            # A função percorre os elementos na lista e chama a si mesma recursivamente com um tamanho de lista menor (size-1).
             self.heap_permutation(a, size - 1)
 
+            # troca elementos na lista para gerar novas permutações
+            # Se o tamanho da lista for ímpar, o primeiro elemento é trocado pelo último elemento.
             if size % 2 == 1:
                 temp = a[0]
                 a[0] = a[size - 1]
                 a[size - 1] = temp
+            # Se o tamanho da lista for par, o elemento atual é trocado pelo último elemento
             else:
                 temp = a[i]
                 a[i] = a[size - 1]
@@ -45,21 +56,17 @@ class GameSimulator(ABC):
         - iteration 1: a,b
         - iteration 2, b,a
         - iteration 3, a,b (back to the initial configuration)
-    
-    Example for 3 players [x,y,z]
-        - iteration 1: x,y,z
-        - iteration 2: y,x,z
-        - iteration 3: z,x,y
-        - iteration 4: x,z,y
-        - iteration 5: y,z,x
-        - iteration 6: z,y,x
-        - iteration 6: x,y,z (back to the initial configuration)
     """
 
+    # Funcao/Método que muda as posições dos jogadores para a próxima permutação
     def change_player_positions(self):
         self.__current_permutation += 1
         if self.__current_permutation >= len(self.__permutations):
             self.__current_permutation = 0
+
+    # Os métodos para executar um jogo são abstratos,
+    # o que significa que não são implementados na classe GameSimulator,
+    # mas devem ser implementados em classes derivadas que herdam dela.
 
     """
     starts a new game
@@ -94,6 +101,11 @@ class GameSimulator(ABC):
     """
     runs the simulation
     """
+
+    # inicializa o estado do jogo e as posições dos jogadores,
+    # notifica os jogadores que um novo jogo está a começar,
+    # é obtida a ação de cada jogador até que o jogo termine
+    # e então notifica os jogadores sobre o resultado do jogo
     def run_simulation(self):
         state = self.init_game()
         players = self.get_player_positions()
@@ -142,6 +154,7 @@ class GameSimulator(ABC):
         return self.__permutations[0]
 
     # returns the ordered list of players for the current permutation
+    # retorna a lista ordenada de jogadores para a permutação atual
     def get_player_positions(self):
         return self.__permutations[self.__current_permutation]
 

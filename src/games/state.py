@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class State(ABC):
+class State(ABC):  # Define diferentes estados do jogo que podem ser usados por um agente que está a jogar para realizar decisoes
 
     """
     Retrieve the number of players
@@ -52,7 +52,9 @@ class State(ABC):
     :param action: the action to be performed (by the current acting player)
     :returns: True if the action ends up being performed
     """
+
     def play(self, action) -> bool:
+        # atualiza o estado do jogo se a ação for valida
         if not self.validate_action(action):
             return False
         self.update(action)
@@ -61,6 +63,7 @@ class State(ABC):
     """
     copies the current game state
     """
+
     def clone(self):
         pass
 
