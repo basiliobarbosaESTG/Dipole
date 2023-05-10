@@ -17,13 +17,6 @@ class HumanDipolePlayer(DipolePlayer):
                 print("Entrada inválida. Por favor, insira um número inteiro válido.")
 
     def get_action(self, state: DipoleState):
-        # state.display()
-        # while True:
-        #     # noinspection PyBroadException
-        #     try:
-        #         return DipoleAction(int(input(f"Player {state.get_acting_player}, choose a row: ")), int(input(f"Player {state.get_acting_player()}, choose a column: ")))
-        #     except Exception:
-        #         continue
         state.display()
 
         while True:

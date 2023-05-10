@@ -13,10 +13,6 @@ class RandomDipolePlayer(DipolePlayer):
         super().__init__(name)
 
     def get_action(self, state: DipoleState):
-        #row = randint(0, state.get_num_rows())
-        #col = randint(0, state.get_num_cols())
-        #return DipoleAction(row, col)
-        #return DipoleAction(randint(0, state.get_num_cols())) #state.get_num_rows()
         no_moves_left = state.no_valid_moves_left()   
         # Escolha aleatoriamente entre passar e colocar uma peça
         if random() < 0.1 or no_moves_left:  # 10% de chance de passar

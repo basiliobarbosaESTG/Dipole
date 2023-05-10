@@ -76,43 +76,6 @@ class DipoleState(State):
             return 1, black_score, white_score
         else:
             return "DRAW", black_score, white_score
-        # # check for 3 across
-        # for row in range(0, self.__num_rows):
-        #     for col in range(0, self.__num_cols - 3):
-        #         if self.__grid[row][col] == player and \
-        #                 self.__grid[row][col + 1] == player and \
-        #                 self.__grid[row][col + 2] == player and \
-        #                 self.__grid[row][col + 3] == player:
-        #             return True
-
-        # # check for 3 up and down
-        # for row in range(0, self.__num_rows - 3):
-        #     for col in range(0, self.__num_cols):
-        #         if self.__grid[row][col] == player and \
-        #                 self.__grid[row + 1][col] == player and \
-        #                 self.__grid[row + 2][col] == player and \
-        #                 self.__grid[row + 3][col] == player:
-        #             return True
-
-        # # check upward diagonal
-        # for row in range(3, self.__num_rows):
-        #     for col in range(0, self.__num_cols - 3):
-        #         if self.__grid[row][col] == player and \
-        #                 self.__grid[row - 1][col + 1] == player and \
-        #                 self.__grid[row - 2][col + 2] == player and \
-        #                 self.__grid[row - 3][col + 3] == player:
-        #             return True
-
-        # # check downward diagonal
-        # for row in range(0, self.__num_rows - 3):
-        #     for col in range(0, self.__num_cols - 3):
-        #         if self.__grid[row][col] == player and \
-        #                 self.__grid[row + 1][col + 1] == player and \
-        #                 self.__grid[row + 2][col + 2] == player and \
-        #                 self.__grid[row + 3][col + 3] == player:
-        #             return True
-
-        # return False
 
     # método que retorna o tabuleiro do jogo
     def get_grid(self):
@@ -136,13 +99,6 @@ class DipoleState(State):
         # valid column
         if col < 0 or col >= self.__num_cols:
             return False
-        
-        # # full column
-        # if self.__grid[0][col] != DipoleState.EMPTY_CELL:
-        #     return False
-        # # full row
-        # if self.__grid[row][0] != DipoleState.EMPTY_CELL:
-        #     return False
         
         #check if grid is full
         if self.__grid[row][col] != DipoleState.EMPTY_CELL:
