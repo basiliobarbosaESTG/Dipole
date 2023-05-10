@@ -13,7 +13,7 @@ class GreedyDipolePlayer(DipolePlayer):
     def get_action(self, state: DipoleState):
         self.action_count += 1
 
-        if self.action_count > 39:
+        if self.action_count > 15:
             return DipoleAction(is_pass=True)
 
         valid_actions = []

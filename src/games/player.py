@@ -11,11 +11,7 @@ class Player(ABC):  # Cria diferentes tipos de jogadores num jogo
     """
 
     def __init__(self, name):
-        # name of the player
         self.__name = name
-
-        # index of the current position of the player in the game
-        # in most games, the first player takes the position 0
         self.__current_pos = None
 
     """

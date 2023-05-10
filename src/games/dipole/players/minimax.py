@@ -15,7 +15,6 @@ class MinimaxDipolePlayer(DipolePlayer):
 
     '''
     This heuristic will simply count the maximum number of consecutive pieces that the player has
-    It's not a great heuristic as it doesn't take into consideration a defensive approach
     '''
 
     def __heuristic(self, state: DipoleState):
@@ -25,27 +24,27 @@ class MinimaxDipolePlayer(DipolePlayer):
         player_territory = 0
         opponent_territory = 0
 
-        player_potential_captures = 0
-        opponent_potential_captures = 0
+        player_captured_pieces = 0
+        opponent_captured_pieces = 0
 
         for i in range(state.get_num_rows()):
             for j in range(state.get_num_cols()):
                 cell = state.get_grid()[i][j]
-                neighbours = state.get_positions(i, j)
+                opponent_pos = state.get_positions(i, j)
 
                 if cell == -1:  # if the cell is empty
-                    if all(state.get_grid()[n[0]][n[1]] == self.get_current_pos() for n in neighbours):
+                    if all(state.get_grid()[n[0]][n[1]] == self.get_current_pos() for n in opponent_pos):
                         player_territory += 1
-                    elif all(state.get_grid()[n[0]][n[1]] == 1 - self.get_current_pos() for n in neighbours):
+                    elif all(state.get_grid()[n[0]][n[1]] == 1 - self.get_current_pos() for n in opponent_pos):
                         opponent_territory += 1
                 elif cell == self.get_current_pos():  # if the cell is owned by the player
-                    if any(state.get_grid()[n[0]][n[1]] == 1 - self.get_current_pos() for n in neighbours):
-                        player_potential_captures += 1
+                    if any(state.get_grid()[n[0]][n[1]] == 1 - self.get_current_pos() for n in opponent_pos):
+                        player_captured_pieces += 1
                 elif cell == 1 - self.get_current_pos():  # if the cell is owned by the opponent
-                    if any(state.get_grid()[n[0]][n[1]] == self.get_current_pos() for n in neighbours):
-                        opponent_potential_captures += 1
+                    if any(state.get_grid()[n[0]][n[1]] == self.get_current_pos() for n in opponent_pos):
+                        opponent_captured_pieces += 1
 
-        return (player_score + player_territory + player_potential_captures) - (opponent_score + opponent_territory + opponent_potential_captures)
+        return (player_score + player_territory + player_captured_pieces) - (opponent_score + opponent_territory + opponent_captured_pieces)
 
     """Implementation of minimax search (recursive, with alpha/beta pruning) :param state: the state for which the 
     search should be made :param depth: maximum depth of the search :param alpha: to optimize the search :param beta: 
@@ -100,7 +99,7 @@ class MinimaxDipolePlayer(DipolePlayer):
     def get_action(self, state: DipoleState):
         self.action_count += 1
 
-        if self.action_count > 39:
+        if self.action_count > 15:
             return DipoleAction(is_pass=True)
         
         # Introduce some randomness in the initial moves

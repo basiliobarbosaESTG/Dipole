@@ -132,20 +132,20 @@ class DipoleState(State):
 
         for r, c in group:
             visited.add((r, c))
-            for adj_row, adj_col in self.get_positions(r, c):
-                if (adj_row, adj_col) not in visited and grid[adj_row][adj_col] == color:
-                    group.append((adj_row, adj_col))
-                    visited.add((adj_row, adj_col))
+            for row_r, col_c in self.get_positions(r, c):
+                if (row_r, col_c) not in visited and grid[row_r][col_c] == color:
+                    group.append((row_r, col_c))
+                    visited.add((row_r, col_c))
 
         return group
 
-    def count_liberties(self, grid, group):
-        liberties = set()
+    def count_free(self, grid, group):
+        free = set()
         for row, col in group:
-            for adj_row, adj_col in self.get_positions(row, col):
-                if grid[adj_row][adj_col] == DipoleState.EMPTY_CELL:
-                    liberties.add((adj_row, adj_col))
-        return len(liberties)
+            for row_r, col_c in self.get_positions(row, col):
+                if grid[row_r][col_c] == DipoleState.EMPTY_CELL:
+                    free.add((row_r, col_c))
+        return len(free)
 
     def is_legal_position(self, grid, player):
         opponent = 0 if player == 1 else 1
@@ -156,14 +156,14 @@ class DipoleState(State):
             for col in range(self.__num_cols):
                 if grid[row][col] == player:
                     group = self.get_group(grid, row, col)
-                    liberties = self.get_liberties(grid, group)
-                    if len(liberties) == 0:
+                    free = self.get_free(grid, group)
+                    if len(free) == 0:
                         own_groups_to_remove.append(group)
 
                 elif grid[row][col] == opponent:
                     group = self.get_group(grid, row, col)
-                    liberties = self.get_liberties(grid, group)
-                    if len(liberties) == 0:
+                    free = self.get_free(grid, group)
+                    if len(free) == 0:
                         opponent_groups_to_remove.append(group)
 
         if len(own_groups_to_remove) > 0 and len(opponent_groups_to_remove) == 0:
@@ -192,9 +192,9 @@ class DipoleState(State):
             new_group = self.get_group(self.__grid, row, col)
             self.__add_group_to_groups(tuple(new_group_id), new_group)
 
-            # remove opponent's groups with zero liberties
+            # remove opponent's groups
             opponent = 1 if self.__acting_player == 0 else 0
-            captured_pieces = self.__remove_opponent_groups_with_zero_liberties(row, col, opponent)
+            captured_pieces = self.__remove_opponent_groups(row, col, opponent)
 
             # update player's score
             if self.__acting_player == 0:
@@ -223,7 +223,7 @@ class DipoleState(State):
                         return False
         return True
  
-    def __remove_opponent_groups_with_zero_liberties(self, row, col, opponent):
+    def __remove_opponent_groups(self, row, col, opponent):
         captured_pieces = 0
         checked_groups = set()
 
@@ -239,7 +239,7 @@ class DipoleState(State):
                     can_remove_group = True
 
                     for piece_row, piece_col in group:
-                        if self.__group_liberties(self.get_group(self.__grid, piece_row, piece_col)) > 0:
+                        if self.__group_free(self.get_group(self.__grid, piece_row, piece_col)) > 0:
                             can_remove_group = False
                             break
 
@@ -256,7 +256,7 @@ class DipoleState(State):
             for col in range(self.__num_cols):
                 if self.__grid[row][col] == (1 if player == 0 else 0):
                     group = self.get_group(self.__grid, row, col)
-                    if self.count_liberties(self.__grid, group) == 0:
+                    if self.count_free(self.__grid, group) == 0:
                         captured_count += len(group)
                         print(f"Player {player} irá capturar {len(group)} peças ao jogar na ({row}, {col})")
         return self.__captured_pieces[player]
@@ -269,25 +269,25 @@ class DipoleState(State):
             del self.__groups[group_id]
     
     
-    def get_liberties(self, grid, group):
-        liberties = set()
+    def get_free(self, grid, group):
+        free = set()
 
         for piece_row, piece_col in group:
             for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 row, col = piece_row + dr, piece_col + dc
                 if 0 <= row < self.__num_rows and 0 <= col < self.__num_cols and grid[row][col] == -1:
-                    liberties.add((row, col))
+                    free.add((row, col))
 
-        return liberties
+        return free
     
-    def __group_liberties(self, group):
-        liberties = set()
+    def __group_free(self, group):
+        free = set()
         for row, col in group:
             for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 nr, nc = row + dr, col + dc
                 if (0 <= nr < self.__num_rows) and (0 <= nc < self.__num_cols) and self.__grid[nr][nc] == DipoleState.EMPTY_CELL:
-                    liberties.add((nr, nc))
-        return len(liberties)
+                    free.add((nr, nc))
+        return len(free)
     
     def __find_group_id(self, row, col, visited=None):
         if visited is None:
