@@ -11,6 +11,7 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
 
     for i in range(0, iterations):
+        #simulator.change_player_positions()
         simulator.run_simulation()
 
     print("Results for the game:")
@@ -19,6 +20,32 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
 
 def main():
     print("ESTG IA Dipole Game Simulator")
+
+    #num_iterations = 1000
+
+    # dipole_simulations = [
+    #     # uncomment to play as human
+    #     {
+    #         "name": "Dipole - Human VS Random",
+    #         "player1": HumanDipolePlayer("Human"),
+    #         "player2": RandomDipolePlayer("Random")
+    #     },
+    #     {
+    #         "name": "Dipole - Random VS Random",
+    #         "player1": RandomDipolePlayer("Random 1"),
+    #         "player2": RandomDipolePlayer("Random 2")
+    #     },
+    #     {
+    #         "name": "Dipole - Minimax VS Random",
+    #         "player1": MinimaxDipolePlayer("Minimax"),
+    #         "player2": RandomDipolePlayer("Random")
+    #     },
+    # ]
+
+    # #
+    # for sim in dipole_simulations:
+    #     run_simulation(sim["name"], DipoleSimulator(
+    #         sim["player1"], sim["player2"]), num_iterations)
 
     while True:
         print("\n----- MENU DO JOGO -----\n")
