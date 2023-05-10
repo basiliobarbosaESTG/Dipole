@@ -101,7 +101,7 @@ class DipoleState(State):
         
         #check if grid is full
         if self.__grid[row][col] != DipoleState.EMPTY_CELL:
-                    return False
+            return False
         
         copy_grid = deepcopy(self.__grid)
         copy_grid[row][col] = player
@@ -110,17 +110,17 @@ class DipoleState(State):
 
         return True
     
-    def get_adjacent_positions(self, row: int, col: int):
-        adjacent_positions = []
+    def get_positions(self, row: int, col: int):
+        positions = []
         if row > 0:
-            adjacent_positions.append((row - 1, col))
+            positions.append((row - 1, col))
         if row < self.__num_rows - 1:
-            adjacent_positions.append((row + 1, col))
+            positions.append((row + 1, col))
         if col > 0:
-            adjacent_positions.append((row, col - 1))
+            positions.append((row, col - 1))
         if col < self.__num_cols - 1:
-            adjacent_positions.append((row, col + 1))
-        return adjacent_positions
+            positions.append((row, col + 1))
+        return positions
 
     def get_group(self, grid, row: int, col: int):
         color = grid[row][col]
@@ -132,7 +132,7 @@ class DipoleState(State):
 
         for r, c in group:
             visited.add((r, c))
-            for adj_row, adj_col in self.get_adjacent_positions(r, c):
+            for adj_row, adj_col in self.get_positions(r, c):
                 if (adj_row, adj_col) not in visited and grid[adj_row][adj_col] == color:
                     group.append((adj_row, adj_col))
                     visited.add((adj_row, adj_col))
@@ -142,7 +142,7 @@ class DipoleState(State):
     def count_liberties(self, grid, group):
         liberties = set()
         for row, col in group:
-            for adj_row, adj_col in self.get_adjacent_positions(row, col):
+            for adj_row, adj_col in self.get_positions(row, col):
                 if grid[adj_row][adj_col] == DipoleState.EMPTY_CELL:
                     liberties.add((adj_row, adj_col))
         return len(liberties)
@@ -194,13 +194,13 @@ class DipoleState(State):
 
             # remove opponent's groups with zero liberties
             opponent = 1 if self.__acting_player == 0 else 0
-            captured_stones = self.__remove_opponent_groups_with_zero_liberties(row, col, opponent)
+            captured_pieces = self.__remove_opponent_groups_with_zero_liberties(row, col, opponent)
 
             # update player's score
             if self.__acting_player == 0:
-                self.__black_score += captured_stones
+                self.__black_score += captured_pieces
             else:
-                self.__white_score += captured_stones
+                self.__white_score += captured_pieces
 
         # switch to next player
         self.__acting_player = 1 if self.__acting_player == 0 else 0
@@ -224,7 +224,7 @@ class DipoleState(State):
         return True
  
     def __remove_opponent_groups_with_zero_liberties(self, row, col, opponent):
-        captured_stones = 0
+        captured_pieces = 0
         checked_groups = set()
 
         for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
@@ -238,26 +238,26 @@ class DipoleState(State):
                     group = self.get_group(self.__grid, nr, nc)
                     can_remove_group = True
 
-                    for stone_row, stone_col in group:
-                        if self.__group_liberties(self.get_group(self.__grid, stone_row, stone_col)) > 0:
+                    for piece_row, piece_col in group:
+                        if self.__group_liberties(self.get_group(self.__grid, piece_row, piece_col)) > 0:
                             can_remove_group = False
                             break
 
                     if can_remove_group:
-                        captured_stones += len(group)
+                        captured_pieces += len(group)
                         self.__captured_pieces[self.__acting_player] += len(group)
                         self.__remove_group_from_board(group_id, group)
 
-        return captured_stones
+        return captured_pieces
     
     def _count_captured_pieces(self, player: int):
         captured_count = 0
         for row in range(self.__num_rows):
             for col in range(self.__num_cols):
-                if self.__grid[row][col] == (1 if player == 0 else 0):  # if the cell belongs to the opponent
+                if self.__grid[row][col] == (1 if player == 0 else 0):
                     group = self.get_group(self.__grid, row, col)
-                    if self.count_liberties(self.__grid, group) == 0:  # if the group has no liberties
-                        captured_count += len(group)  # add the size of the group to the captured count
+                    if self.count_liberties(self.__grid, group) == 0:
+                        captured_count += len(group)
                         print(f"Player {player} irá capturar {len(group)} peças ao jogar na ({row}, {col})")
         return self.__captured_pieces[player]
     
@@ -272,9 +272,9 @@ class DipoleState(State):
     def get_liberties(self, grid, group):
         liberties = set()
 
-        for stone_row, stone_col in group:
+        for piece_row, piece_col in group:
             for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                row, col = stone_row + dr, stone_col + dc
+                row, col = piece_row + dr, piece_col + dc
                 if 0 <= row < self.__num_rows and 0 <= col < self.__num_cols and grid[row][col] == -1:
                     liberties.add((row, col))
 
@@ -297,9 +297,9 @@ class DipoleState(State):
             return None
 
         visited.add((row, col))
-        stone = self.__grid[row][col]
+        piece = self.__grid[row][col]
 
-        if stone == DipoleState.EMPTY_CELL:
+        if piece == DipoleState.EMPTY_CELL:
             return None
 
         # Verificar se a posição (row, col) pertence a algum grupo existente
@@ -313,7 +313,7 @@ class DipoleState(State):
             nr, nc = row + dr, col + dc
 
             if (0 <= nr < self.__num_rows) and (0 <= nc < self.__num_cols):
-                if self.__grid[nr][nc] == stone:
+                if self.__grid[nr][nc] == piece:
                     neighbor_group = self.__find_group_id(nr, nc, visited)
                     if neighbor_group is not None:
                         group_id.update(neighbor_group)
@@ -409,12 +409,6 @@ class DipoleState(State):
         pass
 
     def get_possible_actions(self):
-        # return list(filter(
-        #     lambda action: self.validate_action(action),
-        #     map(
-        #         lambda pos: DipoleAction(pos),
-        #         range(0, self.get_num_cols()))
-        # ))
         grid: list[list[int]] = []
         for i in range(self.get_num_rows()):
             for j in range(self.get_num_cols()):

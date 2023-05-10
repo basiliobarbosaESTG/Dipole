@@ -8,17 +8,14 @@ from games.state import State
 
 
 class RandomDipolePlayer(DipolePlayer):
-
     def __init__(self, name):
         super().__init__(name)
 
     def get_action(self, state: DipoleState):
-        no_moves_left = state.no_valid_moves_left()   
-        # Escolha aleatoriamente entre passar e colocar uma peça
-        if random() < 0.1 or no_moves_left:  # 10% de chance de passar
+        no_moves_left = state.no_valid_moves_left()
+        if random() < 0.1 or no_moves_left:  # probabilidade de passar 10%
             return DipoleAction(-1, -1, True)  # Ação de passar o turno
         else:
-            # Tente colocar peças aleatórias até encontrar uma ação válida
             while True:
                 action = DipoleAction(randint(0, state.get_num_cols() - 1), randint(0, state.get_num_rows() - 1))
                 if state.validate_action(action):

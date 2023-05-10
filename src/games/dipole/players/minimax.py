@@ -31,7 +31,7 @@ class MinimaxDipolePlayer(DipolePlayer):
         for i in range(state.get_num_rows()):
             for j in range(state.get_num_cols()):
                 cell = state.get_grid()[i][j]
-                neighbours = state.get_adjacent_positions(i, j)
+                neighbours = state.get_positions(i, j)
 
                 if cell == -1:  # if the cell is empty
                     if all(state.get_grid()[n[0]][n[1]] == self.get_current_pos() for n in neighbours):

@@ -4,8 +4,8 @@ from games.game_simulator import GameSimulator
 
 
 class DipoleSimulator(GameSimulator):
-    # INICIALIZA COM 2 JOGADORES
-    # DEFINIR NUMER0 DE ROWS E COLS PARA O TABULEIRO DIPOLE - "DESENHAR O TABULEIRO"
+    # Inicializa com 2 jogadores
+    # definir número de linhas e colunas para o tabuleiro (desenha)
     def __init__(self, player1: DipolePlayer, player2: DipolePlayer, num_rows: int = 8, num_cols: int = 8):
         super(DipoleSimulator, self).__init__([player1, player2])
         """
@@ -18,9 +18,7 @@ class DipoleSimulator(GameSimulator):
         return DipoleState(self.__num_rows, self.__num_cols)
 
     def before_end_game(self, state: DipoleState):
-        # ignored for this simulator
         pass
 
     def end_game(self, state: DipoleState):
-        # ignored for this simulator
         pass

@@ -34,26 +34,26 @@ def main():
                 print("2. Human VS Computer")
                 print("3. Computer VS Computer")
                 print("0. Voltar")
-                game_choice = input("Introduza a opção: ")
+                game_option = input("Introduza a opção: ")
 
-                if game_choice == "1":
+                if game_option == "1":
                     run_simulation("Dipole - Human VS Human", DipoleSimulator(HumanDipolePlayer("Human 0"), HumanDipolePlayer("Human 1")), 1)
-                elif game_choice == "2":
+                elif game_option == "2":
                     while True:
                         print("\n----- SELECIONE A DIFICULDADE -----\n")
-                        print("1. Fácil (Random)")
-                        print("2. Médio (Greedy)")
-                        print("3. Difícil (Minimax)")
+                        print("1. Random")
+                        print("2. Greedy")
+                        print("3. Minimax")
                         print("0. Voltar")
-                        difficulty_choice = input("Introduza a opção: ")
+                        difficulty_option = input("Introduza a opção: ")
 
-                        if difficulty_choice == "1":
+                        if difficulty_option == "1":
                             player = RandomDipolePlayer("Random")
-                        elif difficulty_choice == "2":
+                        elif difficulty_option == "2":
                             player = GreedyDipolePlayer("Greedy")
-                        elif difficulty_choice == "3":
+                        elif difficulty_option == "3":
                             player = MinimaxDipolePlayer("Minimax")
-                        elif difficulty_choice == "0":
+                        elif difficulty_option == "0":
                             break
                         else:
                             print("Opção inválida, tente novamente.")
@@ -61,37 +61,37 @@ def main():
 
                         run_simulation(f"Dipole - Human VS {player.get_name()}", DipoleSimulator(HumanDipolePlayer("Human"), player), 1)
                         break
-                elif game_choice == "3":
+                elif game_option == "3":
                     while True:
                         print("\n----- SELECIONE A DIFICULDADE -----\n")
-                        print("1. Fácil (Random) vs Random")
-                        print("2. Médio (Greedy) vs Greedy")
-                        print("3. Difícil (Minimax) vs Minimax")
+                        print("1. Random vs Random")
+                        print("2. Greedy vs Greedy")
+                        print("3. Minimax vs Minimax")
                         print("4. Random vs Greedy")
                         print("5. Random vs Minimax")
                         print("6. Greedy vs Minimax")
                         print("0. Voltar")
-                        difficulty_choice = input("Introduza a opção: ")
+                        difficulty_option = input("Introduza a opção: ")
 
-                        if difficulty_choice == "1":
+                        if difficulty_option == "1":
                             player1 = RandomDipolePlayer("Random 1")
                             player2 = RandomDipolePlayer("Random 2")
-                        elif difficulty_choice == "2":
+                        elif difficulty_option == "2":
                             player1 = GreedyDipolePlayer("Greedy 1")
                             player2 = GreedyDipolePlayer("Greedy 2")
-                        elif difficulty_choice == "3":
+                        elif difficulty_option == "3":
                             player1 = MinimaxDipolePlayer("Minimax 1")
                             player2 = MinimaxDipolePlayer("Minimax 2")
-                        elif difficulty_choice == "4":
+                        elif difficulty_option == "4":
                             player1 = RandomDipolePlayer("Random")
                             player2 = GreedyDipolePlayer("Greedy")
-                        elif difficulty_choice == "5":
+                        elif difficulty_option == "5":
                             player1 = RandomDipolePlayer("Random")
                             player2 = MinimaxDipolePlayer("Minimax")
-                        elif difficulty_choice == "6":
+                        elif difficulty_option == "6":
                             player1 = GreedyDipolePlayer("Greedy")
                             player2 = MinimaxDipolePlayer("Minimax")
-                        elif difficulty_choice == "0":
+                        elif difficulty_option == "0":
                             break
                         else:
                             print("Opção inválida, tente novamente.")
@@ -102,7 +102,7 @@ def main():
                         
                         run_simulation(f"Dipole - {player1.get_name()} VS {player2.get_name()}", DipoleSimulator(player1, player2), iterations)
                         break
-                elif game_choice == "0":
+                elif game_option == "0":
                     break
                 else:
                     print("Opção inválida, tente novamente.")
